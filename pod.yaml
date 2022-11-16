@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: podtest
+spec:
+  containers:
+  - name: cont1
+    image: bquintero56/pagina:latest
+    ports:
+    - containerPort: 80
