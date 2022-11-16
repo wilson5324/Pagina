@@ -30,13 +30,12 @@ jobs:
         minikube start
         kubectl get ns
 
-    - name: copy
+    - name: ruta
       run: |
+        sudo su -
         ls -la
         
-    - name: copy
-      run: |
-        cd .kube
+
       
 
 
