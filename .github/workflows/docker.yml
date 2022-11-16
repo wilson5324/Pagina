@@ -30,7 +30,13 @@ jobs:
         minikube start
         kubectl get ns
 
+    - name: copy
+      run: |
+        ls -la
         
+    - name: copy
+      run: |
+        cd .kube
       
 
 
