@@ -1,11 +1,7 @@
 name: Docker Image CI
-
 on:
   push:
     branches: [ "certificacion" ]
-
-env:
-  tag: (date +%)
 jobs:
 
   build:
@@ -19,6 +15,14 @@ jobs:
          username: ${{ secrets.USER_DOCKER }}
        # Password or personal access token used to log against the Docker registry
          password: ${{ secrets.PASS_DOCKER }}
+         
+    - name: version
+      run: |
+          echo "LATEST=$(version)" >> $GITHUB_ENV
+           
+    - name: version
+      run: |
+         echo ${{ env.LATEST_TAG }}
          
     - uses: actions/checkout@v3
     - name: Build the Docker image
