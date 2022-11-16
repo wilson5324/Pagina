@@ -20,7 +20,10 @@ jobs:
         
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        docker build . --file Dockerfile --bquintero56/pagina
+        docker tag bquintero56/pagina bquintero56/pagina
+        docker push bquintero56/pagina
     - name: docker images
       run: docker images 
 
