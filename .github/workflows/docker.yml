@@ -22,19 +22,18 @@ jobs:
          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
          kubectl version --client
          
-    
     - uses: actions/checkout@v3
     - name: copy
       run: |
         ls -la
-        mkdir .kube
-        mv config .kube
-        cd .kube
-        ls
+        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo install minikube-linux-amd64 /usr/local/bin/minikube
         
+    - uses: actions/checkout@v3        
     - name: kubectl
       run: |
-        kubectl get ns
+        ls -la
+        
       
 
 
