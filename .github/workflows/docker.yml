@@ -27,8 +27,25 @@ jobs:
       - name: conet cluster
         run: aws eks update-kubeconfig --region us-east-2 --name ${{ secrets.REPO }}
         
-      - name: test cluster
-        run: kubectl get po -n camunda
+      - name: Docker Login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.USER_DOCKER }}
+        # Password or personal access token used to log against the Docker registry
+          password: ${{ secrets.PASS_DOCKER }}
+        
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: |
+          docker build -t bquintero56/pagina .
+          docker tag bquintero56/pagina bquintero56/pagina
+          docker push bquintero56/pagina
+      - name: docker images
+        run: docker images 
+    
+      - name: 'deployment'
+        run: |
+          kubectl apply -f pod.yaml -n mongo
         
 
       
