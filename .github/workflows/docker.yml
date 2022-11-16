@@ -5,7 +5,7 @@ on:
     branches: [ "certificacion" ]
 
 env:
-  tag: $(date +%)
+  tag: (date +%)
 jobs:
 
   build:
