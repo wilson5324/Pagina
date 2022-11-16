@@ -16,13 +16,10 @@ jobs:
        # Password or personal access token used to log against the Docker registry
          password: ${{ secrets.PASS_DOCKER }}
          
-    - name: version
-      run: |
-          echo "LATEST=$(-Dexpression=project.version)" >> $GITHUB_ENV
-           
-    - name: version
-      run: |
-           echo ${{ env.LATEST_TAG }}
+    - name: Latest tag
+      run: echo "LATEST_TAG=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )" >> $GITHUB_ENV
+    - name: use env var
+      run: echo ${{ env.LATEST_TAG }}
          
     - uses: actions/checkout@v3
     - name: Build the Docker image
