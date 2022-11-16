@@ -16,6 +16,8 @@ jobs:
        # Password or personal access token used to log against the Docker registry
          password: ${{ secrets.PASS_DOCKER }}
          
+    - name: Set up Maven Settings for deploy
+      uses: s4u/maven-settings-action@v2.1.1   
     - name: Latest tag
       run: echo "LATEST_TAG=$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )" >> $GITHUB_ENV
     - name: use env var
