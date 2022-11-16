@@ -25,3 +25,6 @@ jobs:
       - name: docker images
         run: docker images 
                 
+ develop
+        
+ main
