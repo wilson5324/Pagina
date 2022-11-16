@@ -11,13 +11,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
-    - name: 'Az CLI login'
-      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    - name: confi kubectl 
+      run: |
+         curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+         curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+         echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+          
+    - name: install kubectl 
+      run: |
+         sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+         kubectl version --client
+         
+    - name: Docker Login
+      uses: docker/login-action@v2.1.0
+      with:
+        username: ${{ secrets.USER_DOCKER }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.PASS_DOCKER }}
+        
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker build -t bquintero56/pagina .
+        docker tag bquintero56/pagina bquintero56/pagina
+        docker push bquintero56/pagina
+    - name: docker images
+      run: docker images 
+      
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
       
     - name: 'Run az commands'
       run: |
           az login
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           az aks get-credentials --resource-group Materia --name Pruebamateria
+    - name: 'deployment'
+      run: |
+          kubectl apply -f pod.yaml -n wordpress
 
