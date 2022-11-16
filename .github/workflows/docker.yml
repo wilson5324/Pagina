@@ -47,7 +47,3 @@ jobs:
         run: |
           kubectl apply -f pod.yaml -n mongo
         
-
-      
-
-
