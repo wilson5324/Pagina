@@ -38,13 +38,13 @@ jobs:
     - name: docker images
       run: docker images 
       
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-      env: # Or as an environment variable
-        credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: azure
+      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
     - name: 'Run az commands'
+      env:
+         COREO: ${{ secrets.CORREO }}
+         PASSWORD: ${{ secrets.PASWORD }}
       run: |
           az login
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
