@@ -1,8 +1,6 @@
 name: build
 on:
   - push
-env:
-  tag: v2
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,31 +33,20 @@ jobs:
           username: ${{ secrets.USER_DOCKER }}
         # Password or personal access token used to log against the Docker registry
           password: ${{ secrets.PASS_DOCKER }}
-      - name: version
-        run: |
-           echo "LATEST=$(-Dexpression=project.version)" >> $GITHUB_ENV
-           
-      - name: version
-        run: |
-            echo ${{ env.LATEST_TAG }}
     
       - uses: actions/checkout@v3
       - name: Build the Docker image
         run: |
           docker build -t bquintero56/pagina .
-          docker tag bquintero56/pagina bquintero56/pagina:${{env.tag}}
-          docker push bquintero56/pagina:${{env.tag}}
+          docker tag bquintero56/pagina bquintero56/pagina
+          docker push bquintero56/pagina
           
       - name: docker images
         run: docker images 
-        
-      - uses: actions/checkout@v3
-      - name: scrip
-        run: |
-          echo "LATEST=$
-          sed -i 's|bquintero56/pagina:latest|bquintero56/pagina::${{env.tag}}|g' pod.yaml
-          
+                
       - name: 'deployment'
         run: |
+          kubectl delete -f deployment.yaml -n mongo
           kubectl apply -f pod.yaml -n mongo
+          
         
