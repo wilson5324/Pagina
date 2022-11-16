@@ -1,8 +1,10 @@
 name: Build
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - QA # or the name of your main branch
+      - QA 
 jobs:
   build:
     name: Build
