@@ -28,7 +28,8 @@ jobs:
         run: aws eks update-kubeconfig --region us-east-2 --name ${{ secrets.REPO }}
         
       - name: test cluster
-        run: kubectl get ns
+        run: kubectl get po camunda
+        
 
       
 
