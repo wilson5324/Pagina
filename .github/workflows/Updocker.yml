@@ -23,8 +23,6 @@ jobs:
           docker push bquintero56/pagina
           
       - name: docker images
-        run: docker images 
-                
- develop
+        run: docker images
         
- main
+        
