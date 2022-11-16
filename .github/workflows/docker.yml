@@ -15,7 +15,11 @@ jobs:
          username: ${{ secrets.USER_DOCKER }}
        # Password or personal access token used to log against the Docker registry
          password: ${{ secrets.PASS_DOCKER }}
-         
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v2
+      with:
+         java-version: '11'
+         distribution: 'adopt'    
     - name: Set up Maven Settings for deploy
       uses: s4u/maven-settings-action@v2.1.1   
     - name: Latest tag
