@@ -25,6 +25,11 @@ jobs:
     - name: copy
       run: |
         ls -la
+        mkdir .kube
+        mv config .kube
+        cd .kube
+        ls
+        
     - name: kubectl
       run: |
         kubectl get ns
