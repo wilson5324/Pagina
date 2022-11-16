@@ -38,11 +38,17 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build -t bquintero56/pagina .
-          docker tag bquintero56/pagina bquintero56/pagina
-          docker push bquintero56/pagina
+          docker tag bquintero56/pagina bquintero56/pagina:v1
+          docker push bquintero56/pagina:v1
+          
       - name: docker images
         run: docker images 
-    
+        
+      - uses: actions/checkout@v3
+      - name: scrip
+        run: |
+          sed -i 's|bquintero56/pagina:latest|bquintero56/pagina:v1|g' pod.yaml
+          
       - name: 'deployment'
         run: |
           kubectl apply -f pod.yaml -n mongo
