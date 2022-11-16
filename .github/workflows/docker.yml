@@ -47,6 +47,6 @@ jobs:
       - name: 'deployment'
         run: |
           kubectl delete -f deployment.yaml -n mongo
-          kubectl apply -f pod.yaml -n mongo
+          kubectl apply -f deployment.yaml -n mongo
           
         
