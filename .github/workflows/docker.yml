@@ -18,11 +18,11 @@ jobs:
          
     - name: version
       run: |
-          echo "LATEST=$(version)" >> $GITHUB_ENV
+          echo "LATEST=$(-Dexpression=project.version)" >> $GITHUB_ENV
            
     - name: version
       run: |
-         echo ${{ env.LATEST_TAG }}
+           echo ${{ env.LATEST_TAG }}
          
     - uses: actions/checkout@v3
     - name: Build the Docker image
